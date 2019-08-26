@@ -1,0 +1,73 @@
+<div class="modal-header">
+	<h4 class="modal-title">Surface Terrain</h4>
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+		<!--begin::Form-->
+
+		<form [formGroup]="surfaceForm" class="kt-form kt-form--label-align-right kt-form--group-seperator-dashed" style="text-align: center !important;">
+			<div class="kt-portlet__body">
+				<div class="kt-form__section kt-form__section--first">
+					<div class="form-group kt-form__group row">
+						<div class="col-lg-6 offset-3">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="Surface Terrain (m²)" formControlName="sur_terrain" type="number" min="0">
+							</mat-form-field>
+						</div>
+						<div class="col-lg-6 offset-3">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="Surface Bâtie" formControlName="sur_batie" type="number" min="0">
+							</mat-form-field>
+						</div>
+						<div class="col-lg-6 offset-3">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="Surface Plancher (m²)" formControlName="sur_plancher" type="number" min="0">
+							</mat-form-field>
+						</div>
+						<div class="col-lg-6 offset-3">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="CUS (%)" formControlName="cus" type="number" min="0">
+							</mat-form-field>
+						</div>
+						<div class="col-lg-6 offset-3">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="COS (Ratio)" formControlName="cos" type="number" min="0">
+							</mat-form-field>
+						</div>
+						<div class="col-lg-6 offset-3">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="X (Longitude)" formControlName="long" type="number">
+							</mat-form-field>
+						</div>
+						<div class="col-lg-6 offset-3">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="Y (Latitude)" formControlName="lat" type="number">
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!--<div class="kt-portlet__foot">
+				<div class="kt-form__actions kt-form__actions">
+					<div class="row">
+						<div class="col-lg-3"></div>
+						<div class="col-lg-6">
+							<button mat-raised-button style="background-color: #00C851;color: white" (click)="enregistrer()">Enregistrer</button>&nbsp;
+							<button mat-raised-button color="accent" (click)="continuer()">Continuer</button>&nbsp;
+							<button mat-raised-button type="reset">Réintialiser</button>
+						</div>
+					</div>
+				</div>
+			</div>-->
+		</form>
+		<!--end::Form-->
+</div>
+<div class="modal-footer" style="text-align: center !important;">
+	<button type="button" class="btn btn-success" (click)="save()">Enregistrer</button>
+	<button type="button" class="btn btn-info" (click)="activeModal.close('Close click')">Fermer</button>
+</div>
+

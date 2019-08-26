@@ -1,0 +1,404 @@
+<div class="row">
+	<div class="kt-portlet">
+		<mat-card class="kt-align-center">
+			<mat-card-header style="text-align: center !important;">
+				<mat-card-title style="text-align: center !important;">INFORMATION DOSSIER / معلومات عن الملف</mat-card-title>
+			</mat-card-header>
+			<mat-card-content class="kt-align-center">
+				<div class="form-group kt-form__group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-disabled">
+							<input matInput placeholder="Numéro Dossier / ملف رقم" [(ngModel)]="numDossier" value="{{refDoss | number:'2.0'}}/{{today | date:'yyyy'}}" disabled />
+						</mat-form-field>
+					</div>
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-disabled">
+							<input matInput placeholder="Date Dépôt" value="{{today | date:' dd / MM / yyyy'}}" disabled />
+						</mat-form-field>
+					</div>
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-disabled">
+							<input matInput placeholder="Heure" value="{{today | date:'HH:mm'}}" disabled />
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="form-group kt-form__group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-disabled">
+							<input matInput placeholder="Demandeur / صاحب الطلب" value="{{nomDem}} {{preDem}}" disabled />
+						</mat-form-field>
+					</div>
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-disabled">
+							<input matInput placeholder="Maître d'ouvrage / صاحب المشروع" value="{{nomOuv}} {{preOuv}}" disabled />
+						</mat-form-field>
+					</div>
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-disabled">
+							<input matInput placeholder="&Eacute;tat Dossier" value="{{statut}}" disabled />
+						</mat-form-field>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
+
+<div class="row">
+	<div class="kt-portlet kt-align-center">
+		<div class="kt-portlet__head">
+			<div class="kt-portlet__head-caption">
+				<div class="kt-portlet__head-title">
+						<span class="kt-portlet__head-icon kt-hide">
+							<i class="la la-plus-circle"></i>
+						</span>
+					<h3 class="kt-portlet__head-text">
+						<span class="badge badge-primary">Saisie Dossier / إدخال الملف</span>
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+				<div class="kt-section">
+					<div class="kt-section__content">
+						<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+							<mat-step [stepControl]="maitreForm">
+									<form [formGroup]="maitreForm" class="kt-form kt-form--label-align-right kt-form--group-seperator-dashed" style="text-align: center !important;">
+										<ng-template matStepLabel>Propriétaire Dossier / صاحب المشروع</ng-template>
+										<button class="btn btn-success btn-sm btn-icon offset-11"  matTooltip="Ajouter un autre maître d'ouvrage" (click)="addMaitre()"><i class="la la-plus"></i></button>
+										<div formArrayName="maitres">
+											<div *ngFor="let item of maitres.controls; let itemIndex=index" [formGroupName]="itemIndex">
+												<div class="form-group kt-form__group row" style="text-align: center !important;">
+													<button class="btn btn-danger btn-sm btn-icon offset-6" *ngIf="isChecked && itemIndex != 0" matTooltip="Supprimer" (click)="deleteMaitre(itemIndex)"><i class="la la-close"></i></button>
+												</div>
+												<div class="form-group kt-form__group row" style="text-align: center !important;">
+													<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Qualité Maître d'ouvrage:</label>
+													<div class="col-lg-4">
+														<mat-form-field class="example-full-width">
+															<mat-select formControlName="qualiteMaitre_fr" aria-required="Obligatoire">
+																<mat-option *ngFor="let q of qua_fr" [value]="q.key">
+																	{{q.value}}
+																</mat-option>
+															</mat-select>
+															<mat-placeholder>
+																<b> Qualité </b>
+															</mat-placeholder>
+															<mat-hint align="start">Choisissez la qualité de Maître d'ouvrage</mat-hint>
+														</mat-form-field>
+													</div>
+													<div class="col-lg-4">
+														<mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+															<mat-select formControlName="qualiteMaitre_ar" aria-required="Obligatoire">
+																<mat-option *ngFor="let q of qua_fr" [value]="q.key">
+																	{{q.value}}
+																</mat-option>
+															</mat-select>
+															<mat-placeholder>
+																<b> الصفة </b>
+															</mat-placeholder>
+															<mat-hint align="start" dir="rtl">أدخل صفة صاحب المشروع</mat-hint>
+														</mat-form-field>
+													</div>
+													<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">صفة صاحب المشروع:</label>
+
+												</div>
+												<div class="form-group kt-form__group row">
+													<label class="col-lg-2 offset-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Maître d'ouvrage:</label>
+													<div class="col-lg-4">
+														<mat-form-field class="example-full-width" >
+															<input matInput placeholder="Maître d'ouvrage" formControlName="maitreOuvrage" value="{{maitreNom}}">
+														</mat-form-field>
+													</div>
+													<div class="col-lg-1">
+														<button class="btn btn-primary btn-sm btn-icon" (click)="openMaitre(itemIndex)"><i class="fa fa-user-plus"></i></button>
+													</div>
+													<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">صاحب المشروع:</label>
+												</div>
+												<div class="form-group kt-form__group row">
+													<label class="col-lg-2 offset-2" style="margin-bottom: 0 !important;">Groupement de Cabinets:</label>
+													<div class="col-lg-4">
+														<mat-radio-group formControlName="grpCabinet">
+															<mat-radio-button value="false" checked>Non</mat-radio-button>
+															<mat-radio-button value="true">Oui</mat-radio-button>
+														</mat-radio-group>
+													</div>
+												</div>
+												<br>
+											</div>
+										</div>
+										<div>
+											<button mat-raised-button color="accent" matStepperNext>Suivant</button>
+										</div>
+									</form>
+
+
+							</mat-step>
+							<mat-step [stepControl]="projetForm">
+								<form [formGroup]="projetForm" class="kt-form kt-form--label-align-right kt-form--group-seperator-dashed" style="text-align: center !important;">
+									<ng-template matStepLabel>Information sur Projet / معلومات عن المشروع</ng-template>
+									<div class="form-group kt-form__group row">
+										<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Nom de Projet:</label>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="Nom de Projet" formControlName="nomPrj_fr">
+												<mat-hint align="start">Entrez le nom de votre projet</mat-hint>
+											</mat-form-field>
+										</div>
+										<div class="col-lg-4">
+											<mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+												<input matInput placeholder="اسم المشروع" formControlName="nomPrj_ar">
+												<mat-hint align="start" dir="rtl">أدخل اسم المشروع</mat-hint>
+											</mat-form-field>
+										</div>
+										<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">اسم المشروع :</label>
+									</div>
+									<div class="form-group kt-form__group row">
+										<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Objet de Projet:</label>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="Objet de Projet" formControlName="objetPrj_fr">
+												<mat-hint align="start">Entrez l'objet de votre projet</mat-hint>
+											</mat-form-field>
+										</div>
+										<div class="col-lg-4">
+											<mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+												<input matInput placeholder="موضوع المشروع" formControlName="objetPrj_ar">
+												<mat-hint align="start" dir="rtl">أدخل موضوع المشروع</mat-hint>
+											</mat-form-field>
+										</div>
+										<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">موضوع المشروع :</label>
+									</div>
+									<div formArrayName="ingenieurs">
+										<div *ngFor="let item of ingenieurs.controls; let i=index" [formGroupName]="i">
+											<div class="form-group kt-form__group row">
+												<label class="col-lg-2 offset-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Ingénieurs:</label>
+												<div class="col-lg-4">
+													<mat-form-field class="example-full-width">
+														<input matInput placeholder="Ingénieurs" disabled formControlName="ingenieur">
+													</mat-form-field>
+												</div>
+												<div class="col-lg-1">
+													<button class="btn btn-primary btn-sm btn-icon"><i class="fa fa-user-plus"></i></button>
+												</div>
+												<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">المهندسين:</label>
+												<button class="btn btn-success btn-sm btn-icon" *ngIf="i == 0" matTooltip="Ajouter un ingénieur" (click)="addIngenieur()"><i class="la la-plus"></i></button>
+												<button class="btn btn-danger btn-sm btn-icon" *ngIf="isChecked2 && i != 0" matTooltip="Supprimer" (click)="deleteIngenieur(itemIndex)"><i class="la la-close"></i></button><br>
+											</div>
+										</div>
+									</div>
+									<div class="form-group kt-form__group row">
+										<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Catégorie de projet:</label>
+										<div class="col-lg-3">
+											<mat-form-field class="example-full-width">
+												<mat-select required formControlName="categoriePrj">
+													<mat-option value="GrandsProjets">Grands Projets</mat-option>
+													<mat-option value="PetitsProjets">Petits Projets</mat-option>
+												</mat-select>
+												<mat-placeholder>
+													<b>Catégorie de projet</b>
+												</mat-placeholder>
+												<mat-hint align="start">Choisissez la Catégorie de projet</mat-hint>
+											</mat-form-field>
+										</div>
+										<div class="col-lg-1">
+											<button class="btn btn-primary btn-sm btn-icon" (click)="open()"><i class="fa fa-file-alt"></i></button>
+										</div>
+										<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Nature de Projet:</label>
+										<div class="col-lg-3">
+											<mat-form-field class="example-full-width">
+												<mat-select required formControlName="naturePrj">
+													<mat-option value="AMENAGEMENT_INTERIEUR">Aménagement intérieur</mat-option>
+													<mat-option value="CONSTRUCTION">Construction</mat-option>
+													<mat-option value="GROUPEMENT_HABITATIONS">Groupement d’Habitations</mat-option>
+													<mat-option value="LOTISSEMENT">Lotissement</mat-option>
+													<mat-option value="MODIFICATION_AMENAGEMENT">Modification/Aménagement</mat-option>
+													<mat-option value="MORCELLEMENT">Morcellement</mat-option>
+													<mat-option value="SURELEVATION_BATIMENT_EXISTANT">Surélévation d’un bâtiment existant</mat-option>
+												</mat-select>
+												<mat-placeholder>
+													<b> Nature de projet </b>
+												</mat-placeholder>
+												<mat-hint align="start">Choisissez la nature de projet</mat-hint>
+											</mat-form-field>
+										</div>
+									</div>
+									<div class="form-group kt-form__group row" style="text-align: left !important;">
+										<label  style="margin-bottom: 0 !important; padding-top: 10px !important;">Type de projet:</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<div class="col-lg-7">
+											<mat-form-field class="example-full-width">
+												<mat-select required formControlName="typePrj">
+													<mat-option value="BAT_ADMIN">Batiment administratif</mat-option>
+													<mat-option value="CENTRE_SOCIAL">Centre à caractère social</mat-option>
+													<mat-option value="EQUIPEMENT_SOCIAL">Equipement à caractère social à réaliser par organisme étatiques au profit de leurs personnels</mat-option>
+													<mat-option value="CENTRE_REPOS">Centre de repos et de loisirs publics</mat-option>
+													<mat-option value="EQUIPEMENT_COMMERCIAUX">Equipement commerciaux à réaliser sur une surface de plancher hors œuvres =>500 m²</mat-option>
+													<mat-option value="EQUIPEMENT_CULTUREL">Equipement culturel</mat-option>
+													<mat-option value="EQUIPEMENT_PRIVE">Equipement de loisirs privé</mat-option>
+													<mat-option value="EQUIPEMENT_SANTE">Equipement de santé publique</mat-option>
+													<mat-option value="EQUIPEMENT_SPORTIF">Equipement sportif</mat-option>
+													<mat-option value="EQUIPEMENT_TOURISTIQUE">Equipement touristique</mat-option>
+													<mat-option value="ETABLISSEMENT_ENSEIGNEMENT">Etablissement d’enseignement étatique</mat-option>
+													<mat-option value="EQUIPEMENT_INDUSTRIEL">Equipement industriel à l’exception des établissements de troisième catégorie</mat-option>
+													<mat-option value="GROUPE_HABITATIONS">Groupe d’habitations</mat-option>
+													<mat-option value="IMMEUBLE_SUP">Immeuble supérieur à 15.5 m²</mat-option>
+												</mat-select>
+												<mat-placeholder>
+													<b>Type de projet</b>
+												</mat-placeholder>
+												<mat-hint align="start">Choisissez le type de projet</mat-hint>
+											</mat-form-field>
+										</div>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<label  style="margin-bottom: 0 !important; padding-top: 10px !important;">Niveaux:</label>
+										<div class="col-lg-2">
+											<mat-form-field class="example-full-width">
+												<mat-select required formControlName="niveau">
+													<mat-option value="RDC">RDC </mat-option>
+													<mat-option value="R1">R+1</mat-option>
+													<mat-option value="R2">R+2</mat-option>
+													<mat-option value="R3">R+3</mat-option>
+													<mat-option value="R4">R+4</mat-option>
+													<mat-option value="R5">R+5</mat-option>
+													<mat-option value="PLUS5">Plus de 5</mat-option>
+												</mat-select>
+												<mat-placeholder>
+													<b> Nombre </b>
+												</mat-placeholder>
+												<mat-hint align="start">Choisissez le nombre</mat-hint>
+											</mat-form-field>
+										</div>
+									</div>
+									<div class="form-group kt-form__group row" style="text-align: center !important;">
+										<label class="col-lg-2 offset-1" style="margin-bottom: 0 !important; padding-top: 10px !important;">Références Frontières:</label>
+										<div class="col-lg-6">
+											<mat-form-field class="example-full-width">
+												<mat-chip-list #chipList>
+													<mat-chip *ngFor="let ref of references"
+														[selectable]="selectable"
+														[removable]="removable"
+														(removed)="remove(ref)">
+														{{ref}}
+														<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+													</mat-chip>
+													<input placeholder="Nouveau Référence" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" formControlName="reference" disabled/>
+												</mat-chip-list>
+											</mat-form-field>
+										</div>
+										<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">المراجع العقارية للمشروع:</label><br>
+										<label class="col-lg-2 offset-1" style="margin-bottom: 0 !important; padding-top: 10px !important;"></label>
+										<div class="col-lg-1">
+											<mat-form-field class="example-full-width">
+												<mat-select required formControlName="c1">
+													<mat-option value="T">T </mat-option>
+												</mat-select>
+											</mat-form-field>
+										</div>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width">
+												<input matInput required formControlName="c2">
+											</mat-form-field>
+										</div>
+										<div class="col-lg-1">
+											<mat-form-field class="example-full-width">
+												<mat-select required formControlName="c3">
+													<mat-option value="T">T </mat-option>
+												</mat-select>
+											</mat-form-field>
+										</div>
+										<div class="col-lg-1">
+											<button class="btn btn-success btn-sm btn-icon" matTooltip="Ajouter une référence" (click)="add()"><i class="la la-plus"></i></button>
+										</div>
+
+									</div>
+									<br>
+									<div>
+										<button mat-raised-button matStepperPrevious>Précédent</button>&nbsp;&nbsp;
+										<button mat-raised-button color="accent" matStepperNext>Suivant</button>
+									</div>
+								</form>
+
+							</mat-step>
+							<mat-step [stepControl]="localisationForm">
+								<form [formGroup]="localisationForm">
+									<ng-template matStepLabel>Localisation de Projet / موقع المشروع</ng-template>
+									<div class="form-group kt-form__group row">
+										<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Adresse Projet:</label>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="Adresse de Projet" formControlName="adresse_fr">
+												<mat-hint align="start">Entrez l'adresse de votre projet</mat-hint>
+											</mat-form-field>
+										</div>
+										<div class="col-lg-4">
+											<mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+												<input matInput placeholder="موقع المشروع" formControlName="adresse_ar">
+												<mat-hint align="start" dir="rtl">أدخل موقع المشروع</mat-hint>
+											</mat-form-field>
+										</div>
+										<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">موقع المشروع :</label>
+									</div>
+									<div class="form-group kt-form__group row">
+										<label class="col-lg-2 offset-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Surface Terrain (m²):</label>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width" >
+												<input matInput formControlName="surface_terrain" value="{{surTerrain}}">
+											</mat-form-field>
+										</div>
+										<div class="col-lg-1">
+											<button class="btn btn-primary btn-sm btn-icon" (click)="openSurface()"><i class="fa fa-user-plus"></i></button>
+										</div>
+										<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">مساحة الأرض:</label>
+									</div>
+
+									<div class="form-group kt-form__group row">
+										<div class="col-lg-4">
+											<h4 class="kt-portlet__head-text">
+												<span class="badge badge-primary">Coordonnées Lambert</span>
+											</h4><br>
+											<table class="table table-striped table-bordered">
+												<thead style="background-color: #7c87a6">
+												<tr>
+													<th scope="col">N°</th>
+													<th scope="col">Latitude</th>
+													<th scope="col">Longitude</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr *ngFor=" let position of coordinatesPoly; let i = index" [(ngModel)]="coordinatesPoly[i]">
+													<td>{{i+1}}</td>
+													<td>{{position.lat}}</td>
+													<td>{{position.long}}</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<mat-divider [vertical]="true"></mat-divider>
+										<div class="col-lg-7">
+											<h4 class="kt-portlet__head-text">
+												<span class="badge badge-primary">Situation Géographique</span>
+											</h4><br>
+											<!--<agm-map [latitude]="center.late" [longitude]="center.lng">
+											<agm-marker [latitude]="center.late" [longitude]="center.lng">
+											</agm-marker>
+										</agm-map>-->
+											<agm-map [latitude]="center.lat" [longitude]="center.lng" (mapReady)="onMapReady($event)" >
+											</agm-map>
+<!--											<agm-map (mapReady)="onMapReady($event)">-->
+
+										</div>
+									</div>
+
+									<div>
+										<button mat-raised-button matStepperPrevious>Précédent</button>
+										<button mat-raised-button style="background-color: #00C851;color: white" (click)="save()" >Enregistrer</button>
+									</div>
+								</form>
+							</mat-step>
+						</mat-horizontal-stepper>
+
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

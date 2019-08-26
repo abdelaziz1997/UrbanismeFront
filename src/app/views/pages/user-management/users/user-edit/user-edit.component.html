@@ -1,0 +1,102 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a href="javascript:;" class="btn btn-secondary kt-margin-r-10" (click)="reset()" [disabled]="selectedTab !== 0" mat-raised-button matTooltip="Reset changes">
+				<i class="la la-cog"></i>
+				<span class="kt-hidden-mobile">Réinitialiser</span>
+			</a>
+			<a href="javascript:;" class="btn btn-primary kt-margin-r-10" color="primary" (click)="onSumbit(false)" mat-raised-button matTooltip="Save & Continue">
+				<span class="kt-hidden-mobile">Sauvegarder</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+
+	<kt-portlet-body>
+		<mat-tab-group [(selectedIndex)]="selectedTab">
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-user"></i>
+					Informations Générales
+				</ng-template>
+				<ng-template matTabContent>
+					<!--begin::Form-->
+					<div *ngIf="user">
+						<form [formGroup]="userForm" class="kt-form kt-form--group-seperator-dashed">
+
+							<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000" (close)="onAlertClose($event)">
+								Oh snap! Réssayer.
+							</kt-alert>
+							<div class="kt-form__section kt-form__section--first">
+								<div class="form-group kt-form__group row">
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input matInput placeholder="Entrez le nom" formControlName="nom" required/>
+											<mat-error>Nom est
+												<strong>Obligatoire</strong>
+											</mat-error>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input matInput placeholder="Entrez le prenom" formControlName="prenom" required/>
+											<mat-error>Prenom est
+												<strong>Obligatoire</strong>
+											</mat-error>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											    <input matInput placeholder="Entrez un Username" formControlName="username" required/>
+												<mat-error *ngIf="userForm.get('username').hasError('required')">Username est
+													<strong>Obligatoire</strong>
+												</mat-error>
+												<mat-error *ngIf="userForm.get('username').errors && userForm.get('username').errors.usernameTaken">
+													<strong>	Ce Username est déjà utilisé</strong>
+												</mat-error>
+										</mat-form-field>
+									</div> 
+								</div>
+								<div class="form-group kt-form__group row">
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+											<mat-form-field class="mat-form-field-fluid">
+												<input type="email" matInput placeholder="Entrez un Email" formControlName="email" required/>
+												<mat-error *ngIf="userForm.get('email').hasError('required')">Entrez un email
+													<strong>Valide</strong>
+												</mat-error>
+												<mat-error *ngIf="userForm.get('email').errors && userForm.get('email').errors.emailTaken">
+													<strong>Cette adresse e-mail est déjà utilisé</strong>
+												</mat-error>
+											</mat-form-field>
+									</div>
+									<div  class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+											<input type="password" matInput placeholder="Entrez un password" formControlName="password" required/>
+											<mat-hint >Le mot de passe doit comporter
+												<strong> 8 caractères minimum</strong>
+											</mat-hint>
+											<mat-error *ngIf="userForm.get('password').hasError('minLength') && !userForm.get('password').hasError('required')">
+												Le mot de passe doit comporter
+												<strong> 8 caractères minimum</strong>
+											</mat-error>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field>
+											<mat-select placeholder="Choisissez un role" formControlName="role" aria-required="Obligatoire">
+												<mat-option *ngFor="let rl of roles" [value]="rl.value">
+															{{rl.viewValue}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+							</div>
+						</form>
+						<small>*: Obligatoire</small>
+					</div>
+					<!--end::Form-->
+				</ng-template>
+			</mat-tab>
+		</mat-tab-group>
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,20 @@
+<!-- begin:: Content Head -->
+<div class="kt-subheader kt-grid__item" [hidden]="subheaderService.disabled$ | async" id="kt_subheader">
+	<div class="kt-subheader__main">
+		<h3 *ngIf="title" class="kt-subheader__title">{{title}}</h3>
+		<h4 *ngIf="desc" class="kt-subheader__desc">{{desc}}</h4>
+	</div>
+	<div class="kt-subheader__toolbar">
+		<div class="kt-subheader__wrapper">
+
+			<div data-placement="left">
+				<a href="javascript:;" class="btn kt-subheader__btn-daterange" id="kt_dashboard_daterangepicker" data-placement="left">
+					<span class="kt-subheader__btn-daterange-title" id="kt_dashboard_daterangepicker_title">Aujourd'hui </span>&nbsp;
+					<span class="kt-subheader__btn-daterange-date" id="kt_dashboard_daterangepicker_date">{{today | date:' dd / MM / yyyy'}}</span>
+					<i class="flaticon2-calendar-1"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content Head -->

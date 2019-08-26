@@ -1,0 +1,149 @@
+<div class="row">
+	<div class="kt-portlet">
+		<mat-card class="kt-align-center">
+			<mat-card-header style="text-align: center !important;">
+				<mat-card-title style="text-align: center !important;">INFORMATION G&Eacute;N&Eacute;RALES</mat-card-title>
+			</mat-card-header>
+			<mat-card-content>
+				<div class="form-group kt-form__group row">
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="Réf. Demande" formControlName="refDemande" value="{{reference}}" disabled />
+						</mat-form-field>
+					</div>
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="Date Demande" value="{{today | date:' dd-MM-yyyy  HH:mm'}}" disabled />
+						</mat-form-field>
+					</div>
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="Statut" formControlName="statut" value="{{statut}}" disabled />
+						</mat-form-field>
+					</div>
+					<div class="col-lg-3 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="Plan" formControlName="plan" value="{{plan}}" disabled />
+						</mat-form-field>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
+<div class="row">
+	<div class="kt-portlet">
+		<div class="kt-portlet__head">
+			<div class="kt-portlet__head-caption">
+				<div class="kt-portlet__head-title">
+						<span class="kt-portlet__head-icon kt-hide">
+							<i class="la la-plus-circle"></i>
+						</span>
+					<h3 class="kt-portlet__head-text">
+						Informations de Demandeur / معلومات صاحب الطلب
+					</h3>
+				</div>
+			</div>
+		</div>
+		<!--begin::Form-->
+
+		<form [formGroup]="demandeurFrom" class="kt-form kt-form--label-align-right kt-form--group-seperator-dashed" style="text-align: center !important;">
+			<div class="kt-portlet__body">
+				<div class="kt-form__section kt-form__section--first">
+					<div class="form-group kt-form__group row">
+						<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Nom de Demandeur:</label>
+						<div class="col-lg-4">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="Nom de Demandeur" formControlName="nomDemandeur_fr">
+								<mat-hint align="start">Entrez le nom de demandeur</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="col-lg-4">
+							<mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+								<input matInput placeholder="الاسم العائلي لصاحب الطلب" formControlName="nomDemandeur_ar">
+								<mat-hint align="start" dir="rtl">أدخل الاسم العائلي لصاحب الطلب</mat-hint>
+							</mat-form-field>
+						</div>
+						<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">الاسم العائلي :</label>
+					</div>
+					<div class="form-group kt-form__group row">
+						<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Prénom de Demandeur:</label>
+						<div class="col-lg-4">
+							<mat-form-field class="example-full-width">
+								<input matInput placeholder="Prénom de Demandeur" formControlName="preDemandeur_fr">
+								<mat-hint align="start">Entrez le prénom de demandeur</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="col-lg-4">
+							<mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+								<input matInput placeholder="الاسم الشخصي لصاحب الطلب" formControlName="preDemandeur_ar">
+								<mat-hint align="start" dir="rtl">أدخل الاسم الشخصي لصاحب الطلب</mat-hint>
+							</mat-form-field>
+						</div>
+						<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">الاسم الشخصي :</label>
+					</div>
+					<div class="form-group kt-form__group row">
+						<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Qualité:</label>
+						<div class="col-lg-4">
+							<mat-form-field class="example-full-width">
+								<mat-select required formControlName="qualite_fr">
+									<mat-option value="GERANT_SOCIETE">Gérant de Société</mat-option>
+									<mat-option value="LOCATAIRE">Locataire</mat-option>
+									<mat-option value="MANDATAIRE">Mandataire</mat-option>
+									<mat-option value="PROPRIETAIRE_MAJEUR">Propriétaire Majeur</mat-option>
+									<mat-option value="PROPRIETAIRE_MINEUR">Propriétaire Mineur</mat-option>
+									<mat-option value="PROPRIETAIRE_ORPHELIN_MINEUR">Propriétaire Orphelin Mineur</mat-option>
+								</mat-select>
+								<mat-placeholder>
+									<b> Qualité </b>
+								</mat-placeholder>
+								<mat-hint align="start">Entrez la qualité de demandeur</mat-hint>
+							</mat-form-field>
+						</div>
+						<div class="col-lg-4">
+							<mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+								<mat-select required formControlName="qualite_ar">
+									<mat-option value="GERANT_SOCIETE">Gérant de Société</mat-option>
+									<mat-option value="LOCATAIRE">Locataire</mat-option>
+									<mat-option value="MANDATAIRE">Mandataire</mat-option>
+									<mat-option value="PROPRIETAIRE_MAJEUR">Propriétaire Majeur</mat-option>
+									<mat-option value="PROPRIETAIRE_MINEUR">Propriétaire Mineur</mat-option>
+									<mat-option value="PROPRIETAIRE_ORPHELIN_MINEUR">Propriétaire Orphelin Mineur</mat-option>
+								</mat-select>
+								<mat-placeholder>
+									<b> الصفة </b>
+								</mat-placeholder>
+								<mat-hint align="start" dir="rtl">أدخل صفة صاحب الطلب</mat-hint>
+							</mat-form-field>
+						</div>
+						<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">الصفة :</label>
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<div class="kt-portlet__foot">
+				<div class="kt-form__actions kt-form__actions">
+					<div class="row">
+						<kt-notice [icon]="'flaticon-warning kt-font-primary'">
+							Si vous voulez compléter le dépot de dossier appuyez sur <b>"Continuer"</b>, si ce n'est pas le cas appuyez sur le bouton <b>"Enregistrer"</b>.
+						</kt-notice>
+					</div>
+					<div class="row">
+						<div class="col-lg-3"></div>
+						<div class="col-lg-6">
+							<button mat-raised-button style="background-color: #00C851;color: white" (click)="enregistrer()">Enregistrer</button>&nbsp;
+							<button mat-raised-button color="accent" (click)="continuer()" >Continuer</button>&nbsp;
+							<button mat-raised-button type="reset">Réintialiser</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!--end::Form-->
+	</div>
+</div>
+
+

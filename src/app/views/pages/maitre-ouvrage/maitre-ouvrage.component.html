@@ -1,0 +1,412 @@
+<div class="modal-header">
+	<h4 class="modal-title">Maître d'ouvrage</h4>
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<perfect-scrollbar style="height: 450px;">
+				<!--begin::Form-->
+
+				<form [formGroup]="maitreOuvrageForm" class="kt-form kt-form--label-align-right kt-form--group-seperator-dashed" style="text-align: center !important;">
+					<div class="kt-portlet__body">
+						<div class="kt-form__section kt-form__section--first">
+							<div class="form-group kt-form__group row">
+								<div class="col-lg-8 offset-2">
+									<mat-radio-group>
+										<mat-radio-button value="physique" checked (click)="setType('physique')">PERSONNE PHYSIQUE</mat-radio-button>
+										<mat-radio-button value="morale" (click)="setType('morale')">PERSONNE MORALE</mat-radio-button>
+										<mat-radio-button value="administration" (click)="setType('administration')">ADMINISTARATION PUBLIQUE</mat-radio-button>
+									</mat-radio-group>
+								</div>
+							</div>
+							<div *ngIf="isSelected('physique')">
+								<div class="form-group kt-form__group row">
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<mat-select formControlName="civilite" aria-required="Obligatoire">
+												<mat-option *ngFor="let entry of civiliteEntries" [value]="entry.key">
+													{{entry.value}}
+												</mat-option>
+											</mat-select>
+											<mat-placeholder>
+												<b> Civilité </b>
+											</mat-placeholder>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="N° CIN/Passeport/Titre de séjour" formControlName="cin">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Nom" formControlName="nom">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Prénom" formControlName="prenom">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Lieu délivrance pièce d’identité" formControlName="lieu_deli">
+										</mat-form-field>
+									</div>
+
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Date fin validité pièce identité" formControlName="dtFinVal">
+											<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+											<mat-datepicker #picker></mat-datepicker>
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput [max]="maxDate" [matDatepicker]="pickerNaissance" placeholder="Date Naissance" formControlName="dt_naissance">
+											<mat-datepicker-toggle matSuffix [for]="pickerNaissance"></mat-datepicker-toggle>
+											<mat-datepicker #pickerNaissance></mat-datepicker>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Lieu Naissance" formControlName="lieu_naissance">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<mat-select required formControlName="nationalite">
+												<mat-option value="marocaine">Marocaine</mat-option>
+												<mat-option value="étrangère">&Eacute;trangère</mat-option>
+											</mat-select>
+											<mat-placeholder>
+												<b> Nationalité </b>
+											</mat-placeholder>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Profession" formControlName="profession">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Nom de père" formControlName="nomPere">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Nom de mère" formControlName="nomMere">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="&Eacute;mail" formControlName="email" required>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Téléphone" formControlName="tel">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Adresse" formControlName="adresse">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput #postalCode maxlength="5" placeholder="Code Postal" formControlName="code_postal">
+											<mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Ville" formControlName="ville">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Pays" formControlName="pays">
+										</mat-form-field>
+									</div>
+								</div>
+							</div>
+							<div  *ngIf="isSelected('morale')">
+								<div class="form-group kt-form__group row">
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Raison Sociale" formControlName="rs">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="RC" formControlName="rc">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="ICE" formControlName="ice">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="PATENTE" formControlName="patente">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-2 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="IF" formControlName="if">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Adresse" formControlName="adresseSoc_mor">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Code Postal" formControlName="code_postalSoc_mor">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Ville" formControlName="villeSoc_mor">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Pays" formControlName="paysSoc_mor">
+										</mat-form-field>
+									</div>
+								</div>
+								<br><br>
+								<div class="col-lg-4 offset-1">
+									<h4 class="kt-portlet__head-text">
+										<span class="badge badge-primary">REPR&Eacute;SENTANT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success btn-sm btn-icon" matTooltip="Ajouter un représentant" (click)="addRepMor()"><i class="la la-plus"></i></button></span>
+									</h4>
+								</div>
+								<div formArrayName="representant_morale">
+									<div *ngFor="let item of representant_morale.controls; let itemIndex=index" [formGroupName]="itemIndex">
+										<div class="form-group kt-form__group row">
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<mat-select required formControlName="civilite_mor">
+												<mat-option value="monsieur">M.</mat-option>
+												<mat-option value="mademoiselle">Mlle</mat-option>
+												<mat-option value="madame">Mme</mat-option>
+											</mat-select>
+											<mat-placeholder>
+												<b> Civilité </b>
+											</mat-placeholder>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="N° CIN/Passeport/Titre de séjour" formControlName="cin_mor">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Nom" formControlName="nom_mor">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Prénom" formControlName="prenom_mor">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Lieu délivrance pièce d’identité" formControlName="lieu_deliv_mor">
+										</mat-form-field>
+									</div>
+
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Date fin validité pièce identité" formControlName="dtFinVal_mor">
+											<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+											<mat-datepicker #picker></mat-datepicker>
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput [max]="maxDate" [matDatepicker]="pickerNaissance" placeholder="Date Naissance" formControlName="dt_naissance_mor">
+											<mat-datepicker-toggle matSuffix [for]="pickerNaissance"></mat-datepicker-toggle>
+											<mat-datepicker #pickerNaissance></mat-datepicker>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Lieu Naissance" formControlName="lieu_naissance_mor">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<mat-select required formControlName="nationalite_mor">
+												<mat-option value="marocaine">Marocaine</mat-option>
+												<mat-option value="étrangère">&Eacute;trangère</mat-option>
+											</mat-select>
+											<mat-placeholder>
+												<b> Nationalité </b>
+											</mat-placeholder>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Profession" formControlName="profession_mor">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Nom de père" formControlName="nomPere_mor">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Nom de mère" formControlName="prePere_mor">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="&Eacute;mail" formControlName="email_mor" required>
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Téléphone" formControlName="tel_mor">
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Adresse" formControlName="adresse_mor">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput #postalCode maxlength="5" placeholder="Code Postal" formControlName="code_postal_mor">
+											<mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+										</mat-form-field>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-2">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Ville" formControlName="ville_mor">
+										</mat-form-field>
+									</div>
+									<div class="col-lg-4">
+										<mat-form-field class="example-full-width">
+											<input matInput placeholder="Pays" formControlName="pays_mor">
+										</mat-form-field>
+									</div>
+								</div>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="isSelected('administration')">
+									<div class="form-group kt-form__group row">
+										<div class="col-lg-4 offset-2">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="Dénomination" formControlName="denom">
+											</mat-form-field>
+										</div>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="Qualité" formControlName="qualite">
+											</mat-form-field>
+										</div>
+									</div>
+									<br><br>
+									<div class="col-lg-4 offset-1">
+										<h4 class="kt-portlet__head-text">
+											<span class="badge badge-primary">REPR&Eacute;SENTANT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success btn-sm btn-icon" matTooltip="Ajouter un représentant" (click)="addRepAdm()"><i class="la la-plus"></i></button></span>
+										</h4>
+									</div>
+								<div formArrayName="representant_admin">
+									<div *ngFor="let item of representant_admin.controls; let itemIndex=index" [formGroupName]="itemIndex">
+										<div class="form-group kt-form__group row">
+										<div class="col-lg-4 offset-2">
+											<mat-form-field class="example-full-width">
+												<mat-select required formControlName="civilite_adm">
+													<mat-option value="monsieur">M.</mat-option>
+													<mat-option value="mademoiselle">Mlle</mat-option>
+													<mat-option value="madame">Mme</mat-option>
+												</mat-select>
+												<mat-placeholder>
+													<b> Civilité </b>
+												</mat-placeholder>
+											</mat-form-field>
+										</div>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="N° CIN/Passeport/Titre de séjour" formControlName="cin_adm">
+											</mat-form-field>
+										</div>
+										<br><br>
+										<div class="col-lg-4 offset-2">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="Nom" formControlName="nom_adm">
+											</mat-form-field>
+										</div>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="Prénom" formControlName="pre_adm">
+											</mat-form-field>
+										</div>
+										<br><br>
+										<div class="col-lg-4 offset-2">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="&Eacute;mail" formControlName="email_adm" required>
+											</mat-form-field>
+										</div>
+										<div class="col-lg-4">
+											<mat-form-field class="example-full-width">
+												<input matInput placeholder="Téléphone" formControlName="tel_adm">
+											</mat-form-field>
+										</div>
+									</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+					<!--<div class="kt-portlet__foot">
+						<div class="kt-form__actions kt-form__actions">
+							<div class="row">
+								<div class="col-lg-3"></div>
+								<div class="col-lg-6">
+									<button mat-raised-button type="reset">Réintialiser</button>
+								</div>
+							</div>
+						</div>
+					</div>-->
+				</form>
+				<!--end::Form-->
+	</perfect-scrollbar>
+</div>
+<div class="modal-footer">
+	<button mat-raised-button style="background-color: #00C851;color: white" (click)="passBack()">Enregistrer</button>&nbsp;
+	<button type="button" class="btn btn-info" (click)="activeModal.close('Close click')">Fermer</button>
+</div>

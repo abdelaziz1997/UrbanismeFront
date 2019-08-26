@@ -1,0 +1,20 @@
+<div class="modal-header">
+	<h4 class="modal-title">{{Title}}</h4>
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<perfect-scrollbar style="height: 450px;">
+		<pdf-viewer [src]="pdfSrc"
+					[render-text]="true"
+					[fit-to-page]="true"
+		>
+		</pdf-viewer>
+	</perfect-scrollbar>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-info" (click)="activeModal.close('Close click')">Fermer</button>
+</div>
+
+
