@@ -30,27 +30,22 @@ const routes: Routes = [
 	{
 		path: '',
 		component: BaseComponent,
-		canActivate: [AuthGaurdService],
 		children: [
 			{
 				path: 'admin',
 				loadChildren: 'app/views/pages/admin/admin.module#AdminModule',
-				canActivate: [AdminGaurdService]
 			},
 			{
 				path: 'directeur',
 				component: DirecteurComponent,
-				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'chefService',
 				component: ChefServiceComponent,
-				canActivate: [ChefSrvGaurdService]
 			},
 			{
 				path: 'chefDepartement',
 				component: ChefDeparetementComponent,
-				canActivate: [ChefDepGaurdService]
 			},
 			{
 				path: 'test',
@@ -59,7 +54,6 @@ const routes: Routes = [
 			{
 				path: 'depot',
 				component: DepotComponent,
-				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'roles',
@@ -96,22 +90,18 @@ const routes: Routes = [
 			{
 				path: 'creerDossier',
 				component: CreationDossierComponent,
-				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'creerDocument',
 				component: CreationDocumentComponent,
-				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'surface',
 				component: SurfaceComponent,
-				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'maitre',
 				component: MaitreOuvrageComponent,
-				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'error/403',
