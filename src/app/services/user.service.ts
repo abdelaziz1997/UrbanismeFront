@@ -9,7 +9,7 @@ import { HttpClient, HttpEvent, HttpRequest, HttpHeaders } from '@angular/common
 export class userService
 {
     private user: User;
-    public host:string = 'https://urbanisme-back.herokuapp.com';
+    public host:string = 'https://urbanisme-back.herokuapp.com/';
 
     constructor(private httpclient: HttpClient){}
 

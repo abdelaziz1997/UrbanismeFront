@@ -188,7 +188,7 @@ export class TcCV {
 export class ModelService {
 	private user: User;
 
-	public host: string = 'https://urbanisme-back.herokuapp.com';
+	public host: string = 'https://urbanisme-back.herokuapp.com/';
 
 	constructor( private http: HttpClient) { }
 
