@@ -3,6 +3,8 @@ export class PersPhysique {
 	groupementCabinet: boolean;
 	public nom: string;
 	public prenom: string;
+	public nom_ar: string;
+	public prenom_ar: string;
 	public civilite: string;
 	public numCin_passport_titreSejour: string;
 	public lieuDelivrancePieceId: string;
@@ -19,5 +21,5 @@ export class PersPhysique {
 	public codePostal: string;
 	public ville: string;
 	public pays: string;
-
+	public representant: boolean;
 }

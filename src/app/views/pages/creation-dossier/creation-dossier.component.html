@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row"  id="ErrorCase">
 	<div class="kt-portlet">
 		<mat-card class="kt-align-center">
 			<mat-card-header style="text-align: center !important;">
@@ -49,6 +49,9 @@
 
 		<form [formGroup]="demandeurFrom" class="kt-form kt-form--label-align-right kt-form--group-seperator-dashed" style="text-align: center !important;">
 			<div class="kt-portlet__body">
+				<kt-alert  *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="15000" (close)="onAlertClose($event)">
+					Erreur dans la saisie de formulaire
+				</kt-alert>
 				<div class="kt-form__section kt-form__section--first">
 					<div class="form-group kt-form__group row">
 						<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Nom de Demandeur:</label>

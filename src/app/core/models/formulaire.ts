@@ -1,4 +1,6 @@
 export class Formulaire {
 	type: string;
-	pers: any;
+	persPhysique: any;
+	persMorale: any;
+	adminPub: any;
 }

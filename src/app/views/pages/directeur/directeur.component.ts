@@ -4,169 +4,173 @@ import {MenuConfig} from '../../../core/_config/demo3/menu.config';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {LayoutUtilsService, QueryParamsModel} from '../../../core/_base/crud';
 import {SelectionModel} from '@angular/cdk/collections';
-import {Demande} from '../../../core/models/demande';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ModelService} from '../../../core/services/model.service';
+import {Demande} from '../../../core/models/demande';
+import {DemandeService} from "../../../core/services/demande.service";
 
 @Component({
   selector: 'kt-directeur',
   templateUrl: './directeur.component.html',
   styleUrls: ['./directeur.component.scss']
 })
-export class DirecteurComponent implements  OnInit, OnDestroy {
+export class DirecteurComponent implements  OnInit, OnDestroy  {
 
-	// Table fields
-	displayedColumns = ['select', 'reference', 'dt', 'etat', 'plan', 'actions'];
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild('sort1') sort: MatSort;
+// Table fields
+displayedColumns = ['select', 'reference', 'dt', 'etat', 'plan', 'actions'];
+@ViewChild(MatPaginator) paginator: MatPaginator;
+@ViewChild('sort1') sort: MatSort;
 
-	// Filter fields
-	@ViewChild('searchInput') searchInput: string;
-	lastQuery: QueryParamsModel;
-	// Selection
-	selection = new SelectionModel<Demande>(true, []);
-	demandesResult: Demande[] = [];
-	demandes = new MatTableDataSource<Demande>();
+// Filter fields
+@ViewChild('searchInput') searchInput: string;
+lastQuery: QueryParamsModel;
+// Selection
+selection = new SelectionModel<Demande>(true, []);
+demandesResult: Demande[] = [];
+demandes = new MatTableDataSource<Demande>();
 
-	/**
-	 *
-	 * @param activatedRoute: ActivatedRoute
-	 * @param router: Router
-	 * @param layoutUtilsService: LayoutUtilsService
-	 * @param subheaderService: SubheaderService
-	 * @param _userService
-	 */
-	constructor(
-		private activatedRoute: ActivatedRoute,
-		private router: Router,
-		private layoutUtilsService: LayoutUtilsService,
-		private subheaderService: SubheaderService,
-		private modelService: ModelService) {}
+/**
+ *
+ * @param activatedRoute: ActivatedRoute
+ * @param router: Router
+ * @param layoutUtilsService: LayoutUtilsService
+ * @param subheaderService: SubheaderService
+ * @param modelService
+ */
+constructor(
+  private activatedRoute: ActivatedRoute,
+  private router: Router,
+  private layoutUtilsService: LayoutUtilsService,
+  private subheaderService: SubheaderService,
+  private _service: DemandeService) {}
 
-	/**
-	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-	 */
+/**
+ * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
+ */
 
-	/**
-	 * On init
-	 */
-	ngOnInit() {
+/**
+ * On init
+ */
+ngOnInit() {
 
-		// Set title to page breadCrumbs
-		this.subheaderService.setTitle('Gestion des Dossiers');
-		this.getAllDemandes();
+  // Set title to page breadCrumbs
+  this.subheaderService.setTitle('Gestion des Dossiers');
+  this.getAllDemandes();
 
-	}
+}
 
 
 
-	/**
-	 * On Destroy
-	 */
-	ngOnDestroy() {
-	}
+/**
+ * On Destroy
+ */
+ngOnDestroy() {
+}
 
-	getAllDemandes() {
-		this.modelService.getDemandes().subscribe(
-			data => {
-				this.demandesResult = data;
-				this.demandes.data = data as Demande[];
-				return data;
-			}
-		);
-	}
+getAllDemandes() {
+  this._service.getDemandes().subscribe(
+    data => {
+      this.demandesResult = data;
+      this.demandes.data = data as Demande[];
+      return data;
+    }
+  );
+}
 
-	/**
-	 *
-	 */
-	ngAfterViewInit(): void {
-		this.demandes.sort = this.sort;
-		this.demandes.paginator = this.paginator;
-	}
+/**
+ *
+ */
+ngAfterViewInit(): void {
+  this.demandes.sort = this.sort;
+  this.demandes.paginator = this.paginator;
+}
 
-	/** ACTIONS */
-	/**
-	 * Delete user
-	 *
-	 * @param _item: User
-	 */
-	/*deleteUser(_item: User) {
-		const _title: string = "Supprimer l'utilisateur";
-		const _description: string = 'Etes-vous sûr de supprimer définitivement cet utilisateur?';
-		const _waitDesciption: string = "Suppression de l'utilisateur...";
-		const _deleteMessage = "L'utilisateur a été supprimé";
+/** ACTIONS */
+/**
+ * Delete user
+ *
+ * @param _item: User
+ */
+/*deleteUser(_item: User) {
+  const _title: string = "Supprimer l'utilisateur";
+  const _description: string = 'Etes-vous sûr de supprimer définitivement cet utilisateur?';
+  const _waitDesciption: string = "Suppression de l'utilisateur...";
+  const _deleteMessage = "L'utilisateur a été supprimé";
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
-		dialogRef.afterClosed().subscribe(res => {
-			if (!res) {
-				return;
-			}
-			this._userService.deleteUser(_item)
-				.subscribe( data => {
-					this.usersResult = this.usersResult.filter(u => u !== _item);
-				});
-			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-			this.getAllUsers();
-		});
-	}*/
+  const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
+  dialogRef.afterClosed().subscribe(res => {
+    if (!res) {
+      return;
+    }
+    this._userService.deleteUser(_item)
+      .subscribe( data => {
+        this.usersResult = this.usersResult.filter(u => u !== _item);
+      });
+    this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+    this.getAllUsers();
+  });
+}*/
 
-	/**
-	 * Fetch selected rows
-	 */
-	fetchDemandes() {
-		const messages = [];
-		this.selection.selected.forEach(elem => {
-			messages.push({
-				text: `${elem.reference}, ${elem.date_depot}`,
-				plan: elem.plan,
-				status: elem.status
-			});
-		});
-		this.layoutUtilsService.fetchElements(messages);
-	}
+/**
+ * Fetch selected rows
+ */
+fetchDemandes() {
+  const messages = [];
+  this.selection.selected.forEach(elem => {
+    messages.push({
+      text: `${elem.date_depot}`,
+      plan: elem.plan,
+      status: elem.status,
+      id: elem.reference
+    });
+  });
+  this.layoutUtilsService.fetchElements(messages);
+}
 
-	/**
-	 * Check all rows are selected
-	 */
-	isAllSelected(): boolean {
-		const numSelected = this.selection.selected.length;
-		const numRows = this.demandesResult.length;
-		return numSelected === numRows;
-	}
+/**
+ * Check all rows are selected
+ */
+isAllSelected(): boolean {
+  const numSelected = this.selection.selected.length;
+  const numRows = this.demandesResult.length;
+  return numSelected === numRows;
+}
 
-	/**
-	 * Toggle selection
-	 */
-	masterToggle() {
-		if (this.selection.selected.length === this.demandesResult.length) {
-			this.selection.clear();
-		} else {
-			this.demandesResult.forEach(row => this.selection.select(row));
-		}
-	}
+/**
+ * Toggle selection
+ */
+masterToggle() {
+  if (this.selection.selected.length === this.demandesResult.length) {
+    this.selection.clear();
+  } else {
+    this.demandesResult.forEach(row => this.selection.select(row));
+  }
+}
 
-	/**
-	 *
-	 * @param value
-	 */
-	public doFilter = (value: string) => {
-		this.demandes.filter = value.trim().toLocaleLowerCase();
-	}
+/**
+ *
+ * @param value
+ */
+public doFilter = (value: string) => {
+  this.demandes.filter = value.trim().toLocaleLowerCase();
+}
 
-	/**
-	 * Redirect to edit page
-	 *
-	 * @param id
-	 */
-	/*editUser(id) {
-		this.router.navigate(['../users/edit', id], { relativeTo: this.activatedRoute });
-	}*/
+/**
+ * Redirect to edit page
+ *
+ * @param id
+ */
+/*editUser(id) {
+  this.router.navigate(['../users/edit', id], { relativeTo: this.activatedRoute });
+}*/
 
-	ValiderDemande(id: any) {
+ValiderDemande(id: any) {
 
-	}
+}
 
-	deleteDemande(demande: any) {
+deleteDemande(demande: any) {
 
-	}
+}
+
+
 }

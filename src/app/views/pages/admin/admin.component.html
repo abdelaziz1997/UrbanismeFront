@@ -1,1 +1,81 @@
-Sample page
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-caption">
+            <div class="kt-portlet__head-title">
+                <span class="kt-portlet__head-icon kt-hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="kt-portlet__head-text">
+                    Paramétrage de système
+                </h3>
+            </div>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form [formGroup]="ParamFrom" class="kt-form kt-form--label-align-right kt-form--group-seperator-dashed" style="text-align: center !important;">
+        <div class="kt-portlet__body">
+            <div class="kt-form__section kt-form__section--first">
+                <div class="form-group kt-form__group row">
+                    <label class="col-lg-2 col-form-label" style="margin-bottom: 0 !important; padding-top: 10px !important;">Ville:</label>
+                    <div class="col-lg-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Entrez ville" formControlName="ville_fr">
+                            <mat-hint align="start">Veuillez entrer la ville</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-4">
+                        <mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+                            <input matInput placeholder="المدينة" formControlName="ville_ar">
+                            <mat-hint align="start" dir="rtl">أدخل المدينة</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">المدينة :</label>
+                </div>
+                <div class="form-group kt-form__group row">
+                    <label class="col-lg-2 col-form-label" style="margin-bottom: 0 !important; padding-top: 10px !important;">Province:</label>
+                    <div class="col-lg-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Entrez province" formControlName="province_fr">
+                            <mat-hint align="start">Veuillez entrer la province</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-4">
+                        <mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+                            <input matInput placeholder="الإقليم" formControlName="province_ar">
+                            <mat-hint align="start" dir="rtl">أدخل الإقليم</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">الإقليم :</label>
+                </div>
+                <div class="form-group kt-form__group row">
+                    <label class="col-lg-2 col-form-label" style="margin-bottom: 0 !important; padding-top: 10px !important;">Commune:</label>
+                    <div class="col-lg-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Entrez commune" formControlName="commune_fr">
+                            <mat-hint align="start">Veuillez entrer la commune</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-4">
+                        <mat-form-field dir="rtl" style="text-align: right" class="example-full-width ">
+                            <input matInput placeholder="الجماعة" formControlName="commune_ar">
+                            <mat-hint align="start" dir="rtl">أدخل الجماعة</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">الجماعة :</label>
+                </div>
+            </div>
+        </div>
+        <div class="kt-portlet__foot">
+            <div class="kt-form__actions kt-form__actions">
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <button mat-raised-button color="accent" (click)="enregistrer()">Sauvgarder</button>&nbsp;
+                        <button mat-raised-button type="reset">Réintialiser</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>

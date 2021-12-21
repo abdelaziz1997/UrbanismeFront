@@ -3,6 +3,8 @@ import {MaitreOuvrageComponent} from '../maitre-ouvrage/maitre-ouvrage.component
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CategorieDocComponent} from '../categorie-doc/categorie-doc.component';
 import {Router} from "@angular/router";
+import {DemandeService} from "../../../core/services/demande.service";
+import {ModelService} from "../../../core/services/model.service";
 
 @Component({
   selector: 'kt-creation-document',
@@ -32,13 +34,12 @@ export class CreationDocumentComponent implements OnInit {
 	pdfSrcDoc2: string;
 	pdfSrcDoc3: string;
 	pdfSrcDoc4: string;
-  constructor(private modalService: NgbModal, private router: Router) { }
+  constructor(private modalService: NgbModal, private router: Router, private service: DemandeService, private _service: ModelService) { }
 
   ngOnInit() {
 	  this.nomDem = history.state.nomDem;
 	  this.preDem = history.state.preDem;
 	  this.refDoss = history.state.id;
-	  this.refDoss++;
 	  this.refDem = history.state.reference;
 	  this.today = history.state.date;
 	  this.statut = history.state.statut;
@@ -112,11 +113,24 @@ export class CreationDocumentComponent implements OnInit {
   }
 
 	impDemAut() {
-
+/*		var mediaType = 'application/pdf';
+		this.http.post(this.myUrl, {location: "report.pdf"}, { responseType: 'blob' }).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: mediaType });
+				saveAs(blob, 'report.pdf');
+			},
+			e => { throwError(e); }
+		);*/
+		this._service.imprimerDemande('/ImprimerDemande/',this.refDem);
+  		/*this.service.imprimerDemAut(this.refDem).subscribe(data => {
+		}, err => {
+			console.log(err);
+		});*/
+		//this.router.navigate(['/ImprimerAutorisation']);
 	}
 
 	impIdEng() {
-
+		this._service.imprimerIdentite('/ImprimerIdentite/',this.refDem);
 	}
 
 	listeLoi() {
@@ -124,7 +138,7 @@ export class CreationDocumentComponent implements OnInit {
 	}
 
 	bordereau() {
-
+		this.router.navigate(['/bordereau']);
 	}
 
 	save() {

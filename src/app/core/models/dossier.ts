@@ -9,6 +9,4 @@ export class Dossier {
 	date_depot: Date;
 	demandeRef: string;
 	projet: Projet;
-	docs: Document[] = new Array();
-	bord: Bordereau[] = new Array();
 }

@@ -66,6 +66,10 @@ import {
 import {HttpUtilsService, InterceptService, LayoutUtilsService, TypesUtilsService} from '../../core/_base/crud';
 import {UserManagementModule} from "./user-management/user-management.module";
 import { ListeDossiersComponent } from './liste-dossiers/liste-dossiers.component';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { DemandeAutorisationComponent } from './demande-autorisation/demande-autorisation.component';
+import { BordereauComponent } from './bordereau/bordereau.component';
+import { RegistresComponent } from './registres/registres.component';
 
 @NgModule({
 	declarations: [
@@ -79,7 +83,10 @@ import { ListeDossiersComponent } from './liste-dossiers/liste-dossiers.componen
 		MaitreOuvrageComponent,
 		CreationDocumentComponent,
 		SurfaceComponent,
-		ListeDossiersComponent
+		ListeDossiersComponent,
+		DemandeAutorisationComponent,
+		BordereauComponent,
+		RegistresComponent
 	],
 	exports: [
 		MatFormFieldModule,
@@ -94,6 +101,7 @@ import { ListeDossiersComponent } from './liste-dossiers/liste-dossiers.componen
 		DeleteEntityDialogComponent],
 	imports: [
 		CommonModule,
+		ScrollToModule.forRoot(),
 		HttpClientModule,
 		FormsModule,
 		NgbModule,

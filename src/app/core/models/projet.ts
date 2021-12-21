@@ -14,6 +14,6 @@ export class Projet {
 	type: string;
 	localisation: Local;
 	ing: Ingenieur[] = new Array();
-	ref: string[] = new Array();
+	references: Reference[] = new Array();
 	proprietaires: any;
 }

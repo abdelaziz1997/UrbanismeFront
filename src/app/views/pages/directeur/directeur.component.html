@@ -61,6 +61,7 @@
 		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
 		<div class="mat-table__wrapper">
 			<mat-table class="lmat-elevation-z8"
+					   style="alignment: center !important;"
                        #table
 					   [dataSource]="demandes"
 					   matSort
@@ -97,7 +98,7 @@
 				</ng-container>
 
 				<ng-container matColumnDef="etat">
-					<mat-header-cell *matHeaderCellDef mat-sort-header> Statut</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef mat-sort-header> Etat</mat-header-cell>
 					<mat-cell *matCellDef="let demande">
 						{{demande.status}}
 					</mat-cell>
@@ -111,8 +112,8 @@
 				<ng-container matColumnDef="actions">
 					<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
 					<mat-cell *matCellDef="let demande">
-						<button (click)="ValiderDemande(demande.id)" mat-icon-button color="primary" matTooltip="valider">
-							<mat-icon>Validate</mat-icon>
+						<button (click)="ValiderDemande(demande.id)" mat-icon-button color="primary" matTooltip="Afficher">
+							<mat-icon>visibility</mat-icon>
 						</button>&nbsp;
 						<button mat-icon-button color="warn" matTooltip="Supprimer" type="button" (click)="deleteDemande(demande)">
 							<mat-icon>delete</mat-icon>

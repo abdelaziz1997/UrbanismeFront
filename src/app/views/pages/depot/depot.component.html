@@ -8,7 +8,7 @@
 				<div class="form-group kt-form__group row">
 					<div class="col-lg-4 kt-margin-bottom-20-mobile">
 						<mat-form-field class="mat-form-field-disabled">
-							<input matInput placeholder="Numéro Dossier / ملف رقم" [(ngModel)]="numDossier" value="{{refDoss | number:'2.0'}}/{{today | date:'yyyy'}}" disabled />
+							<input matInput placeholder="Numéro Dossier / ملف رقم" value="{{refDoss | number:'2.0'}}/{{today | date:'yyyy'}}" disabled />
 						</mat-form-field>
 					</div>
 					<div class="col-lg-4 kt-margin-bottom-20-mobile">
@@ -106,7 +106,7 @@
 													<label class="col-lg-2 offset-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Maître d'ouvrage:</label>
 													<div class="col-lg-4">
 														<mat-form-field class="example-full-width" >
-															<input matInput placeholder="Maître d'ouvrage" formControlName="maitreOuvrage" value="{{maitreNom}}">
+															<input matInput placeholder="Maître d'ouvrage" value="{{maitreNom}}" disabled >
 														</mat-form-field>
 													</div>
 													<div class="col-lg-1">
@@ -174,11 +174,8 @@
 												<label class="col-lg-2 offset-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Ingénieurs:</label>
 												<div class="col-lg-4">
 													<mat-form-field class="example-full-width">
-														<input matInput placeholder="Ingénieurs" disabled formControlName="ingenieur">
+														<input matInput placeholder="Ingénieurs" formControlName="ingenieur">
 													</mat-form-field>
-												</div>
-												<div class="col-lg-1">
-													<button class="btn btn-primary btn-sm btn-icon"><i class="fa fa-user-plus"></i></button>
 												</div>
 												<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">المهندسين:</label>
 												<button class="btn btn-success btn-sm btn-icon" *ngIf="i == 0" matTooltip="Ajouter un ingénieur" (click)="addIngenieur()"><i class="la la-plus"></i></button>
@@ -201,7 +198,7 @@
 											</mat-form-field>
 										</div>
 										<div class="col-lg-1">
-											<button class="btn btn-primary btn-sm btn-icon" (click)="open()"><i class="fa fa-file-alt"></i></button>
+											<button class="btn btn-primary btn-sm btn-icon" (click)="openCategorieDoc()"><i class="fa fa-file-alt"></i></button>
 										</div>
 										<label class="col-lg-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Nature de Projet:</label>
 										<div class="col-lg-3">
@@ -342,11 +339,11 @@
 										<label class="col-lg-2 offset-2" style="margin-bottom: 0 !important; padding-top: 10px !important;">Surface Terrain (m²):</label>
 										<div class="col-lg-4">
 											<mat-form-field class="example-full-width" >
-												<input matInput formControlName="surface_terrain" value="{{surTerrain}}">
+												<input matInput value="{{surTerrain}}" disabled>
 											</mat-form-field>
 										</div>
 										<div class="col-lg-1">
-											<button class="btn btn-primary btn-sm btn-icon" (click)="openSurface()"><i class="fa fa-user-plus"></i></button>
+											<button class="btn btn-primary btn-sm btn-icon" (click)="openSurface()"><i class="fa fa-map-marked-alt"></i></button>
 										</div>
 										<label class="col-lg-2 col-form-label" dir="rtl" style="float: right !important;">مساحة الأرض:</label>
 									</div>

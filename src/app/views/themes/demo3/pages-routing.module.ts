@@ -25,27 +25,35 @@ import {UserEditComponent} from '../../pages/user-management/users/user-edit/use
 import {RolesListComponent} from '../../pages/user-management/roles/roles-list/roles-list.component';
 import {UsersListComponent} from '../../pages/user-management/users/users-list/users-list.component';
 import {ListeDossiersComponent} from "../../pages/liste-dossiers/liste-dossiers.component";
+import {DemandeAutorisationComponent} from "../../pages/demande-autorisation/demande-autorisation.component";
+import {BordereauComponent} from "../../pages/bordereau/bordereau.component";
+import {RegistresComponent} from "../../pages/registres/registres.component";
 
 const routes: Routes = [
 	{
 		path: '',
 		component: BaseComponent,
+		canActivate: [AuthGaurdService],
 		children: [
 			{
 				path: 'admin',
 				loadChildren: 'app/views/pages/admin/admin.module#AdminModule',
+				canActivate: [AdminGaurdService]
 			},
 			{
 				path: 'directeur',
 				component: DirecteurComponent,
+				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'chefService',
 				component: ChefServiceComponent,
+				canActivate: [ChefSrvGaurdService]
 			},
 			{
 				path: 'chefDepartement',
 				component: ChefDeparetementComponent,
+				canActivate: [ChefDepGaurdService]
 			},
 			{
 				path: 'test',
@@ -54,6 +62,22 @@ const routes: Routes = [
 			{
 				path: 'depot',
 				component: DepotComponent,
+				canActivate: [DirecteurGaurdService]
+			},
+			{
+				path: 'registres',
+				component: RegistresComponent,
+				canActivate: [DirecteurGaurdService]
+			},
+			{
+				path: 'ImprimerAutorisation',
+				component: DemandeAutorisationComponent,
+				canActivate: [DirecteurGaurdService]
+			},
+			{
+				path: 'bordereau',
+				component: BordereauComponent,
+				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'roles',
@@ -90,18 +114,22 @@ const routes: Routes = [
 			{
 				path: 'creerDossier',
 				component: CreationDossierComponent,
+				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'creerDocument',
 				component: CreationDocumentComponent,
+				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'surface',
 				component: SurfaceComponent,
+				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'maitre',
 				component: MaitreOuvrageComponent,
+				canActivate: [DirecteurGaurdService]
 			},
 			{
 				path: 'error/403',

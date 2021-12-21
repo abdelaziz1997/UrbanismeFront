@@ -13,7 +13,8 @@ import {Dossier} from '../../../core/models/dossier';
 import {ModelService} from '../../../core/services/model.service';
 import {LayoutUtilsService, QueryParamsModel} from '../../../core/_base/crud';
 import {SubheaderService} from '../../../core/_base/layout';
-import {Demande} from "../../../core/models/demande";
+import {Demande} from '../../../core/models/demande';
+import {DemandeService} from "../../../core/services/demande.service";
 
 @Component({
   selector: 'kt-liste-dossiers',
@@ -41,14 +42,14 @@ export class ListeDossiersComponent implements OnInit, OnDestroy {
 	 * @param router: Router
 	 * @param layoutUtilsService: LayoutUtilsService
 	 * @param subheaderService: SubheaderService
-	 * @param _userService
+	 * @param modelService
 	 */
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
 		private layoutUtilsService: LayoutUtilsService,
 		private subheaderService: SubheaderService,
-		private modelService: ModelService) {}
+		private _service: DemandeService) {}
 
 	/**
 	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
@@ -74,7 +75,7 @@ export class ListeDossiersComponent implements OnInit, OnDestroy {
 	}
 
 	getAllDemandes() {
-		this.modelService.getDemandes().subscribe(
+		this._service.getDemandes().subscribe(
 			data => {
 				this.demandesResult = data;
 				this.demandes.data = data as Demande[];
@@ -124,9 +125,10 @@ export class ListeDossiersComponent implements OnInit, OnDestroy {
 		const messages = [];
 		this.selection.selected.forEach(elem => {
 			messages.push({
-				text: `${elem.reference}, ${elem.date_depot}`,
+				text: `${elem.date_depot}`,
 				plan: elem.plan,
-				status: elem.status
+				status: elem.status,
+				id: elem.reference
 			});
 		});
 		this.layoutUtilsService.fetchElements(messages);

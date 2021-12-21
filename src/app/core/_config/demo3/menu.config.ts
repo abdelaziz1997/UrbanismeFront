@@ -61,6 +61,12 @@ export class MenuConfig {
 					page: '/directeur',
 				},
 				{
+					title: 'Registres',
+					root: true,
+					icon: 'flaticon2-document',
+					page: '/registres',
+				},
+				{
 					title: 'Dossiers',
 					root: true,
 					icon: 'flaticon-folder',
@@ -100,21 +106,25 @@ export class MenuConfig {
 				{
 					title: 'Paramétrage',
 					root: true,
-					icon: 'flaticon2-architecture-and-city',
+					icon: 'flaticon2-settings',
 					page: '/admin',
 					bullet: 'line',
 				},
 				{
 					title: 'Gestion des utilisateurs',
 					root: true,
-					icon: 'flaticon-folder',
-					page: '/admin',
+					icon: 'flaticon2-user-1',
 					submenu: [
 						{
-							title: 'Utilisateurs',
+							title: 'Liste des Utilisateurs',
 							page: '/users',
-							icon: 'flaticon2-user-outline-symbol'
+							icon: 'flaticon2-user'
 						},
+						{
+							title: 'Ajouter Utilisateur',
+							page: '/users/add',
+							icon: 'flaticon2-plus-1'
+						}
 					]
 				}
 			]

@@ -34,7 +34,8 @@
             ],
             "scripts": [
               "src/assets/vendors/global/vendors.bundle.js",
-              "src/assets/js/demo1/scripts.bundle.js"
+              "src/assets/js/demo1/scripts.bundle.js",
+				"src/assets/js/DroidNaskh-Regular-normal.js"
             ],
             "es5BrowserSupport": true
           },

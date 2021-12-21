@@ -5,5 +5,5 @@ export class AdminPub {
 	groupementCabinet: boolean;
 	denomination: string;
 	qualiteAdm: string;
-	repPhysiques: PersPhysique[] = new Array();
+	representantAdmPhy: PersPhysique[] = new Array();
 }
